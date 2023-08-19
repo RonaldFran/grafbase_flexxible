@@ -2,9 +2,13 @@ import { NavLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import AuthProviders from "./AuthProvider";
+import { getCurrentUser, authOptions } from "@/lib/session";
 
-const Navbar = () => {
-  const session = {};
+const Navbar = async () => {
+  const session = await getCurrentUser();
+  //const session = authOptions.callbacks?.session;
+  console.log({ session });
 
   return (
     <nav className="flexBetween navbar">
@@ -21,12 +25,20 @@ const Navbar = () => {
         </ul>
       </div>
       <div>
-        {session ? (
+        {session?.user ? (
           <>
-            User Photo <Link href="/create-project">Share work</Link>
+            {session?.user?.image && (
+              <Image
+                src={session.user.image}
+                height={40}
+                width={40}
+                className="rounded-full"
+                alt={session.user.name}
+              />
+            )}
           </>
         ) : (
-          <>AuthProvider</>
+          <AuthProviders />
         )}
       </div>
     </nav>
