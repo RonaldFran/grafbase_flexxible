@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import AuthProviders from "./AuthProvider";
 import { getCurrentUser, authOptions } from "@/lib/session";
+import ProfileMenu from "./ProfileMenu";
 
 const Navbar = async () => {
   const session = await getCurrentUser();
@@ -27,15 +28,10 @@ const Navbar = async () => {
       <div>
         {session?.user ? (
           <>
-            {session?.user?.image && (
-              <Image
-                src={session.user.image}
-                height={40}
-                width={40}
-                className="rounded-full"
-                alt={session.user.name}
-              />
-            )}
+            <div className="flex-1 flexStart gap-10">
+              <ProfileMenu session={session} />
+              <Link href="/create-project">Share work</Link>
+            </div>
           </>
         ) : (
           <AuthProviders />

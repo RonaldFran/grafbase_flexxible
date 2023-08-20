@@ -1,5 +1,6 @@
 "use client";
 import { getProviders, signIn } from "next-auth/react";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 
 type Provider = {
@@ -30,7 +31,8 @@ const AuthProviders = () => {
       <div>
         {Object.values(providers).map((provider: Provider, i) => (
           <button key={i} onClick={() => signIn(provider?.id)}>
-            {provider.id}
+            Sign In
+            {/* <Link href="/sign-page">Sign In</Link> */}
           </button>
         ))}
       </div>
